@@ -142,6 +142,179 @@ Encuentra clientes cuyo nombre tenga la letra "z" (insensible a mayúsculas/mi
 
 
 
+### 📑 Consultas sobre arrays:
+
+1.
+```js
+db.clientes.find(
+{ preferencias: "natural" }
+)
+```
+Busca clientes que tengan "natural" en sus preferencias.
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20213631.png)
+
+
+2.
+```js
+db.productos.find(
+    { tags: { $all: ["natural", "orgánico"] } }
+    )
+
+```
+Encuentra productos que tengan al menos los tags "natural" y "orgánico" (usa $all).
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20213855.png)
+
+
+3.
+```js
+db.productos.find(
+  {$expr: {$gt: [{$size: "$tags"}, 1]}}
+)
+```
+Enuentra los productos que tienen mas de un tag.
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20214143.png)
+
+Tambien con mas de dos tagas: 
+```js
+db.productos.find(
+  {$expr: {$gt: [{$size: "$tags"}, 2]}}
+)
+```
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20214311.png)
+
+
+
+
+### 💾 Aggregation Framework con Pipelines:
+
+1.
+```js
+db.ventas.aggregate([
+  { $unwind: "$productos" },
+  { 
+    $group: {
+      _id: "$productos.productoId",
+      totalUnidadesVendidas: { $sum: "$productos.cantidad" }
+    }
+  },
+  {
+    $lookup: {
+      from: "productos",
+      localField: "_id",
+      foreignField: "_id",
+      as: "producto"
+    }
+  },
+  { $unwind: "$producto" },
+  {
+    $project: {
+      _id: 0,
+      nombre: "$producto.nombre",
+      totalUnidadesVendidas: 1
+    }
+  },
+  { $sort: { totalUnidadesVendidas: -1 } }
+])
+```
+Muestra un listado de los productos más vendidos (suma total de unidades vendidas por producto).
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20214746.png)
+
+
+2. 
+```js
+db.clientes.aggregate([
+  {
+    $project: {
+      nombre: 1,
+      cantidadCompras: { $size: "$compras" }
+    }
+  },
+  {
+    $group: {
+      _id: "$cantidadCompras",
+      clientes: { $push: "$nombre" },
+      totalClientes: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { _id: -1 }
+  },
+  {
+    $project: {
+      _id: 0,
+      compras: "$_id",
+      clientes: 1,
+      totalClientes: 1
+    }
+  }
+])
+```
+Agrupa clientes por cantidad de compras realizadas.
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20215807.png)
+
+
+3.
+```js
+db.ventas.aggregate([
+  {
+    $group: {
+      _id: { mes: { $month: "$fecha" } },
+      totalVentas: { $sum: "$total" },
+      cantidadVentas: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { "_id.mes": 1 }
+  }
+])
+```
+Muestra el total de ventas por mes (usa $group y $month).
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20220128.png)
+
+
+4.
+```js
+db.productos.aggregate([
+  {
+    $group: {
+      _id: "$categoria",
+      precioPromedio: { $avg: "$precio" },
+      cantidadProductos: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { precioPromedio: -1 }
+  }
+])
+```
+Calcula el promedio de precios por categoría de producto.
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20220413.png)
+
+
+5.
+```js
+db.productos.find()
+  .sort({ stock: -1 })
+  .limit(3)
+```
+Muestra los 3 productos con mayor stock (orden descendente con $sort y $limit).
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20220611.png)
+
+
+
+
+
+
+
 
 
 
