@@ -21,6 +21,7 @@ db.clientes.insertOne(
 )
 ```
 Inserta un nuevo cliente que se llama "Mario Mendoza", con correo "mario@email.com", sin compras, y preferencias "energético" y "natural".
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20180027.png)
 
 
@@ -35,6 +36,7 @@ db.productos.find(
 )
 ```
 Consulta todos los productos que tengan stock mayor a 20 unidades.
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20185332.png)
 
 2.
@@ -47,6 +49,7 @@ db.clientes.find({
 })
 ```
 Consulta los clientes que no han comprado aún ningún producto.
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20185913.png)
 
 
@@ -62,6 +65,7 @@ db.productos.updateOne(
 )
 ```
 Aumenta en 10 unidades el stock del producto "Borojó deshidratado".
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20190305.png)
 
 2.
@@ -72,6 +76,7 @@ db.productos.updateMany(
 )
 ```
 Añade el tag "bajo azúcar" a todos los productos de la categoría "Bebida".
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20190723.png)
 
 
@@ -86,6 +91,7 @@ db.clientes.deleteOne(
 )
 ```
 Elimina el cliente que tenga el correo "juan@email.com".
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20192200.png)
 
 2.
@@ -95,6 +101,7 @@ db.productos.deleteMany(
 )
 ```
 Elimina todos los productos con stock menor a 5 (considera esto como un proceso de limpieza de inventario).
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20192443.png)
 
 
@@ -109,6 +116,7 @@ db.productos.find(
 )
 ```
 Buscar productos cuyo nombre empiece por "Boro".
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20192746.png)
 
 2.
@@ -118,13 +126,23 @@ db.productos.find
 )
 ```
 Encuentra productos cuyo nombre contenga la palabra "con" (como en “Concentrado de borojó”).
+
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20194057.png)
 
 3.
 ```js
-
+    db.clientes.find
+({ nombre: { $regex: /z/i } }
+)
 ```
 Encuentra clientes cuyo nombre tenga la letra "z" (insensible a mayúsculas/minúsculas).
+
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20194649.png)
+
+
+
+
+
 
 
 
