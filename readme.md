@@ -313,6 +313,16 @@ Muestra los 3 productos con mayor stock (orden descendente con $sort y $limit
 
 
 
+## 🛠️ Funciones:
+
+### Calcular decuento:
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20225015.png)
+
+### Verificar si un cliente esta activo o no:
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20232049.png)
+
+### Verificar si hay el suficiente stock para realizar una compra:
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20231609.png)
 
 
 
