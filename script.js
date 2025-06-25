@@ -49,7 +49,7 @@ try {
 
 
 // Función 3: Verificar stock suficiente para producto
-async function verificarStock(productoId, cantidadDeseada) {
+async function verificarStock(productonombre, cantidadDeseada) {
 if (typeof cantidadDeseada !== "number" || cantidadDeseada <= 0) {
     console.log("Cantidad deseada inválida. Debe ser un número positivo.");
     return;
@@ -58,7 +58,7 @@ const client = new MongoClient(uri);
 try {
     await client.connect();
     const db = client.db(dbName);
-    const producto = await db.collection('productos').findOne({ _id: productoId });
+    const producto = await db.collection('productos').findOne({ nombre: productonombre });
     if (!producto) {
     console.log("Producto no encontrado.");
     return;
@@ -89,7 +89,6 @@ if (!parametro1 || !parametro2) {
 if (!parametro1) {
     console.log("Debes escribir el id del cliente. Ejemplo:\nnode script.js clienteActivo 1");
 } else {
-    // _id puede ser número o string, ajusta según tu esquema
     let id = isNaN(parametro1) ? parametro1 : Number(parametro1);
     clienteActivo(id);
 }
@@ -97,9 +96,9 @@ if (!parametro1) {
 if (!parametro1 || !parametro2) {
     console.log("Debes escribir id de producto y cantidad deseada. Ejemplo:\nnode script.js verificarStock 2 10");
 } else {
-    let productoId = isNaN(parametro1) ? parametro1 : Number(parametro1);
+    let productonombre = isNaN(parametro1) ? parametro1 : Number(parametro1);
     let cantidad = Number(parametro2);
-    verificarStock(productoId, cantidad);
+    verificarStock(productonombre, cantidad);
 }
 } else {
 console.log("Comando no reconocido. Usa uno de estos:");

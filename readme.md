@@ -322,7 +322,7 @@ Muestra los 3 productos con mayor stock (orden descendente con $sort y $limit
 ![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20232049.png)
 
 ### Verificar si hay el suficiente stock para realizar una compra:
-![evidencia](evidencias/Captura%20de%20pantalla%202025-06-21%20231609.png)
+![evidencia](evidencias/Captura%20de%20pantalla%202025-06-25%20103110.png)
 
 
 
